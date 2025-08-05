@@ -1,15 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hidden Links</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>google.com</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        h1, h2 {
+            color: #333;
+            margin-top: 20px;
+        }
+        .auth-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 50px auto;
+            max-width: 400px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .auth-input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .auth-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .auth-button:hover {
+            background-color: #0056b3;
+        }
+        .content {
+            display: none;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px auto;
+        }
+        .link-button {
+            display: inline-block;
+            width: 80%;
+            max-width: 300px;
+            margin: 10px 0;
+            padding: 15px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.2s;
+            border: none;
+        }
+        .link-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-  <h1>Secret Links</h1>
-  <div id="link-container">Loading links...</div>
+    <!-- Authentication Screen -->
+    <div id="authScreen" class="auth-container">
+        <h2>Access Control</h2>
+        <input type="password" id="passwordInput" class="auth-input" placeholder="Enter access code" />
+        <button onclick="authenticate()" class="auth-button">Access</button>
+        <div id="errorMsg" class="error"></div>
+    </div>
 
-  <script src="script.js"></script>
+    <!-- Main Content (Hidden by default) -->
+    <div id="mainContent" class="content">
+        <h2>09.07.2025 Updates</h2>
+
+        <h2>12+ New Space Proxy Links</h2>
+        <div class="button-container" id="spaceLinks"></div>
+
+        <h2>14+ New Rammerhead Proxy Links</h2>
+        <div class="button-container" id="rammerheadLinks1"></div>
+
+        <h2>25.06.2025 Updates</h2>
+
+        <h2>13+ New Utopia Proxy Links</h2>
+        <div class="button-container" id="utopiaLinks1"></div>
+
+        <h2>14+ New Rammerhead Proxy Links</h2>
+        <div class="button-container" id="rammerheadLinks2"></div>
+
+        <h2>12+ New Bolt Proxy Links</h2>
+        <div class="button-container" id="boltLinks"></div>
+
+        <h2>13+ New Utopia Proxy Links</h2>
+        <div class="button-container" id="utopiaLinks2"></div>
+
+        <h2>13+ New Shadow Proxy Links</h2>
+        <div class="button-container" id="shadowLinks"></div>
+    </div>
+
+    <script>
+        // Disable right-click context menu
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // Disable common keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S
+            if (e.keyCode === 123 || 
+                (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) ||
+                (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83))) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Obfuscated authentication
+        const auth = {
+            key: btoa('proxy2025'), // Base64 encoded password
+            check: function(input) {
+                return btoa(input) === this.key;
+            }
+        };
+
+        // Encrypted link data (Base64 encoded)
+        const linkData = {
+            space: [
+                'aHR0cHM6Ly9uaXJieXRlc3guYmFzZWxpbnV4Lm5ldC8=',
+                'aHR0cHM6Ly92aXBuaXJieXRlc3Byb3h5LmJhc2VsaW51eC5uZXQv',
+                'aHR0cHM6Ly9uaXJieXRleFNwYWNlLmZsdXh1cy5vcmcv',
+                'aHR0cHM6Ly9qYW5lYmlkLmJhc2VsaW51eC5uZXQv',
+                'aHR0cHM6Ly9tYW5kaWthbGFpLmJhc2VsaW51eC5uZXQv',
+                'aHR0cHM6Ly9wcm94ZXByb2xhbWUuYmFzZWxpbnV4Lm5ldC8=',
+                'aHR0cHM6Ly9qYW5raW1hdHhlci5mbHV4dXMub3JnLw==',
+                'aHR0cHM6Ly9uZXBreHRoLmZsdXh1cy5vcmcv',
+                'aHR0cHM6Ly96eW5kcmF2aS5wcm9zZS5jb20v',
+                'aHR0cHM6Ly9nb25tYWxpLnZpcC54eXov',
+                'aHR0cHM6Ly9wcmVldGlsYW4uZmx1eHVzLm9yZy8=',
+                'aHR0cHM6Ly9zaW1wbGF4ZXIuZmx1eHVzLm9yZy8='
+            ],
+            rammerhead1: [
+                'aHR0cHM6Ly9pYW0uc3RldmV3YXJkLndzLw==',
+                'aHR0cHM6Ly9wcm94eXNsdXRzLmNvcmFsLXNob3Aucm8v',
+                'aHR0cHM6Ly9rYWd1cmFiYWNoaWxvdmVyLmxnbW5vdy5jb20v',
+                'aHR0cHM6Ly9zY3JzYS5sdWh1LmpwLw==',
+                'aHR0cHM6Ly9idS1hYmR1bGxhLmdhZnRvbi5ldS8=',
+                'aHR0cHM6Ly9oaWNsdXplbG9sLm5laWtvcy5jb20ubXgv',
+                'aHR0cHM6Ly9rZW5reXUubHVodS5qcC8=',
+                'aHR0cHM6Ly9ieS1pdHJzYS5wZXR0aWNhLmNvbS8=',
+                'aHR0cHM6Ly91c2Vybm90Zm91bmQucGFsb21hZGkuYXIv',
+                'aHR0cHM6Ly9pYW0uc3RldmV3YXJkLndzLw==',
+                'aHR0cHM6Ly9pc2hvd3NwZWVkLmNocmlzaG93Lm9yZy8=',
+                'aHR0cHM6Ly9zbm9vcC5kb2dkYW1taXQuY29tLw==',
+                'aHR0cHM6Ly9uZXhvLmtvdGkuY2Yv',
+                'aHR0cHM6Ly9mbGlwZ3JpZC5pbWRiLmdxLw=='
+            ]
+        };
+
+        function authenticate() {
+            const input = document.getElementById('passwordInput').value;
+            const errorMsg = document.getElementById('errorMsg');
+            
+            if (auth.check(input)) {
+                document.getElementById('authScreen').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                loadLinks();
+                errorMsg.textContent = '';
+            } else {
+                errorMsg.textContent = 'Invalid access code';
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+
+        function loadLinks() {
+            // Dynamically create links after authentication
+            createLinkButtons('spaceLinks', linkData.space);
+            createLinkButtons('rammerheadLinks1', linkData.rammerhead1);
+            // Add other link categories here...
+        }
+
+        function createLinkButtons(containerId, links) {
+            const container = document.getElementById(containerId);
+            links.forEach((encodedUrl, index) => {
+                const button = document.createElement('button');
+                button.className = 'link-button';
+                button.textContent = index + 1;
+                button.onclick = () => openProxy(encodedUrl);
+                container.appendChild(button);
+            });
+        }
+
+        function openProxy(encodedUrl) {
+            const url = atob(encodedUrl);
+            const popup = window.open("", "proxy", "width=800,height=600,resizable=yes,scrollbars=yes");
+            
+            if (popup) {
+                popup.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>google.com</title>
+                        <link rel="icon" href="https://www.google.com/favicon.ico" type="image/x-icon">
+                        <style>
+                            body { margin: 0; padding: 0; overflow: hidden; }
+                            iframe { width: 100%; height: 100vh; border: none; }
+                        </style>
+                    </head>
+                    <body>
+                        <iframe src="${url}"></iframe>
+                    </body>
+                    </html>
+                `);
+                popup.document.close();
+            } else {
+                alert("Popup blocker detected!");
+            }
+        }
+
+        // Additional protection: Clear page if developer tools detected
+        let devtools = {open: false, orientation: null};
+        setInterval(() => {
+            if (window.outerHeight - window.innerHeight > 200 || 
+                window.outerWidth - window.innerWidth > 200) {
+                if (!devtools.open) {
+                    devtools.open = true;
+                    document.body.innerHTML = '<h1>Access Denied</h1><p>Developer tools detected.</p>';
+                }
+            }
+        }, 500);
+
+        // Enter key support for password
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                authenticate();
+            }
+        });
+    </script>
 </body>
 </html>
